@@ -18,7 +18,10 @@ const Bio: React.FC = () => {
             name
             summary
           }
-          social
+          social {
+            href
+            label
+          }
         }
       }
     }
@@ -36,7 +39,7 @@ const Bio: React.FC = () => {
       <StaticImage
         className="bio-avatar"
         layout="fixed"
-        src="../images/fpo.png"
+        src="../../images/fpo.png"
         width={120}
         height={120}
         quality={95}
