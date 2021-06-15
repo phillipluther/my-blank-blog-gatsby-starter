@@ -24,9 +24,7 @@ const Seo: React.FC<SeoProps> = ({ description = '', lang = 'en', meta = [], tit
           siteMetadata {
             title
             description
-            social {
-              twitter
-            }
+            social
           }
         }
       }
@@ -35,6 +33,17 @@ const Seo: React.FC<SeoProps> = ({ description = '', lang = 'en', meta = [], tit
 
   const metaDescription = description || site.siteMetadata.description;
   const defaultTitle = site.siteMetadata?.title;
+
+  const getTwitterHandle = (): string => {
+    const regExp = new RegExp('^https?://(www\.)?twitter\.com/(#!/)?([^/]+)(/\w+)*$');
+    let twitterHandle = '';
+
+    site.siteMetadata.social.forEach(({ href }) => {
+      const match = href.match(regExp);
+      twitterHandle = match ? match : twitterHandle;
+    });
+    return twitterHandle;
+  };
 
   return (
     <Helmet
@@ -66,7 +75,7 @@ const Seo: React.FC<SeoProps> = ({ description = '', lang = 'en', meta = [], tit
         },
         {
           name: `twitter:creator`,
-          content: site.siteMetadata?.social?.twitter || ``,
+          content: getTwitterHandle(),
         },
         {
           name: `twitter:title`,

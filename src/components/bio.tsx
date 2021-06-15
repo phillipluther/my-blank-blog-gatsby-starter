@@ -18,9 +18,7 @@ const Bio: React.FC = () => {
             name
             summary
           }
-          social {
-            twitter
-          }
+          social
         }
       }
     }
@@ -29,28 +27,35 @@ const Bio: React.FC = () => {
   // Set these values by editing "siteMetadata" in gatsby-config.js
   const author = data.site.siteMetadata?.author;
   const social = data.site.siteMetadata?.social;
+  const authorName = author?.name || 'Author Bio';
+  const authorSummary = author?.summary
 
   return (
-    <div className="bio">
-      {/* <StaticImage
+    <aside className="bio">
+      <h2 className="bio-name">About the Author, {authorName}</h2>
+      <StaticImage
         className="bio-avatar"
         layout="fixed"
-        src="../images/profile-pic.png"
-        width={50}
-        height={50}
+        src="../images/fpo.png"
+        width={120}
+        height={120}
         quality={95}
-        alt="Profile picture"
-      /> */}
-      {author?.name && (
-        <p>
-          Written by <strong>{author.name}</strong> {author?.summary || null}
-          {` `}
-          <a href={`https://twitter.com/${social?.twitter || ``}`}>
-            You should follow them on Twitter
-          </a>
-        </p>
+        alt={authorName}
+      />
+      {authorSummary && (
+        <p>{authorSummary || null}</p>
       )}
-    </div>
+
+      {social && (
+        <ul className="social">
+          {/* {social.map(({ href, label }) =>(
+            <li className="social-item" key={href}>
+              <a href={href} className="social-link">{label}</a>
+            </li>
+          ))} */}
+        </ul>
+      )}
+    </aside>
   );
 };
 

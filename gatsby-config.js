@@ -11,12 +11,24 @@ module.exports = {
     },
     description: packageData.description,
     siteUrl: packageData.homepage,
-    social: {
-      twitter: 'phillipluther',
-      youtube: 'phillipluther',
-      linkedIn: 'phillipluther',
-      instagram: 'phillipluthertoo',
-    },
+    social: [
+      {
+        href: 'https://twitter.com/phillipluther',
+        label: '@phillipluther on Twitter',
+      },
+      {
+        href: 'https://www.youtube.com/phillipluther',
+        label: '@phillipluther on YouTube',
+      },
+      {
+        href: 'https://www.linkedin.com/in/phillipluther/',
+        label: 'phillipluther on LinkedIn',
+      },
+      {
+        href: 'https://www.instagram.com/phillipluthertoo/',
+        label: 'phillipluthertoo on Instagram',
+      },
+    ],
   },
   plugins: [
     'gatsby-plugin-image',
