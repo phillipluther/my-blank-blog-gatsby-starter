@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Link, graphql, PageProps } from 'gatsby';
+import PostSummary from '../components/post-summary';
 
 const TagsTemplate: React.FC<PageProps> = ({ pageContext, data }) => {
   const { tag } = pageContext;
@@ -13,10 +14,16 @@ const TagsTemplate: React.FC<PageProps> = ({ pageContext, data }) => {
       <ul>
         {edges.map(({ node }) => {
           const { slug } = node.fields;
-          const { title } = node.frontmatter;
+          const { excerpt } = node;
+          const { description, ...summaryProps } = node.frontmatter;
+
           return (
             <li key={slug}>
-              <Link to={slug}>{title}</Link>
+              <PostSummary
+                slug={slug}
+                description={description || excerpt }
+                {...summaryProps}
+              />
             </li>
           );
         })}
@@ -42,8 +49,19 @@ export const tagsQuery = graphql`
           fields {
             slug
           }
+          excerpt(pruneLength: 160)
           frontmatter {
             title
+            description
+            date(formatString: "MMMM DD, YYYY") 
+            coverImage {
+              childImageSharp {
+                fluid(maxWidth: 1280) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            tags
           }
         }
       }

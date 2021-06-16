@@ -12,9 +12,9 @@ const TagsPage: React.FC<PageProps> = ({
   },
 }) => (
   <div>
-    <Helmet title={title} />
+    <Helmet title={`Browse Post Categories`} />
     <div>
-      <h1>All Tags</h1>
+      <h1>Browse Post Categories</h1>
       <ul>
         {group.map((tag) => (
           <li key={tag.fieldValue}>
