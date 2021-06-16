@@ -1,11 +1,13 @@
 const path = require('path');
+const dashify = require('dashify');
 const { createFilePath } = require('gatsby-source-filesystem');
 
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions;
 
   // Define a template for blog post
-  const blogPost = path.resolve('./src/templates/blog-post.tsx');
+  const blogPostTemplate = path.resolve('./src/templates/blog-post.tsx');
+  const tagTemplate = path.resolve('./src/templates/tags.tsx');
 
   // Get all markdown blog posts sorted by date
   const result = await graphql(
@@ -19,8 +21,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             }
           }
         }
+        tags: allMarkdownRemark(limit: 2000) {
+          group(field: frontmatter___tags) {
+            fieldValue
+          }
+        }
       }
-    `
+    `,
   );
 
   if (result.errors) {
@@ -41,7 +48,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
       createPage({
         path: post.fields.slug,
-        component: blogPost,
+        component: blogPostTemplate,
         context: {
           id: post.id,
           previousPostId,
@@ -50,6 +57,17 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       });
     });
   }
+
+  const tags = result.data.tags.group;
+  tags.forEach((tag) => {
+    createPage({
+      path: `/tags/${dashify(tag.fieldValue)}/`,
+      component: tagTemplate,
+      context: {
+        tag: tag.fieldValue,
+      },
+    });
+  });
 };
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

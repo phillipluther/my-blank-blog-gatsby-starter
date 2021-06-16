@@ -31,7 +31,7 @@ const Bio: React.FC = () => {
   const author = data.site.siteMetadata?.author;
   const social = data.site.siteMetadata?.social;
   const authorName = author?.name || 'Author Bio';
-  const authorSummary = author?.summary
+  const authorSummary = author?.summary;
 
   return (
     <aside className="bio">
@@ -45,9 +45,7 @@ const Bio: React.FC = () => {
         quality={95}
         alt={authorName}
       />
-      {authorSummary && (
-        <p>{authorSummary || null}</p>
-      )}
+      {authorSummary && <p>{authorSummary || null}</p>}
 
       {social && (
         <ul className="social">

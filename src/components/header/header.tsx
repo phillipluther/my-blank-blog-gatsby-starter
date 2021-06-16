@@ -20,7 +20,9 @@ const Header: React.FC<HeaderProps> = ({ title, location }) => {
         <SkipNavLink />
 
         <TitleTag className={styles.title}>
-          <Link to="/" className={styles.homeLink}>{title}</Link>
+          <Link to="/" className={styles.homeLink}>
+            {title}
+          </Link>
         </TitleTag>
       </header>
       <SkipNavContent />

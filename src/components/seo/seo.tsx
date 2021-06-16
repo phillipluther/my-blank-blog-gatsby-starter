@@ -31,14 +31,14 @@ const Seo: React.FC<SeoProps> = ({ description = '', lang = 'en', meta = [], tit
           }
         }
       }
-    `
+    `,
   );
 
   const metaDescription = description || site.siteMetadata.description;
   const defaultTitle = site.siteMetadata?.title;
 
   const getTwitterHandle = (): string => {
-    const regExp = new RegExp('^https?://(www\.)?twitter\.com/(#!/)?([^/]+)(/\w+)*$');
+    const regExp = new RegExp('^https?://(www.)?twitter.com/(#!/)?([^/]+)(/w+)*$');
     let twitterHandle = '';
 
     site.siteMetadata.social.forEach(({ href }) => {
