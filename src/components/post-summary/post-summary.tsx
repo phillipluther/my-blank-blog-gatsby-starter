@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Link } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import dashify from 'dashify';
 import VisuallyHidden from '@reach/visually-hidden';
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 
 interface PostSummaryProps {
   title: string;
@@ -26,7 +27,10 @@ const PostSummary: React.FC<PostSummaryProps> = ({
       <header>
         <h3>{title}</h3>
         <p>{date}</p>
-        {/* coverImage */}
+
+        {coverImage && (
+          <GatsbyImage image={getImage(coverImage)} alt={title} role="presentation" />
+        )}
       </header>
 
       <div>{description}</div>
@@ -43,7 +47,7 @@ const PostSummary: React.FC<PostSummaryProps> = ({
             const dashedTag = dashify(tag);
 
             return (
-              <li className="tag" key="dashedTag">
+              <li className="tag" key={dashedTag}>
                 <Link to={`/tags/${dashedTag}`}>{tag}</Link>
               </li>
             );
@@ -55,3 +59,23 @@ const PostSummary: React.FC<PostSummaryProps> = ({
 };
 
 export default PostSummary;
+
+export const postSummaryQuery = graphql`
+  fragment PostSummaryProps on MarkdownRemark {
+    fields {
+      slug
+    }
+    excerpt(pruneLength: 160)
+    frontmatter {
+      title
+      description
+      date(formatString: "MMMM DD, YYYY") 
+      coverImage {
+        childImageSharp {
+          gatsbyImageData(layout: CONSTRAINED)
+        }
+      }
+      tags
+    }
+  }
+`;
