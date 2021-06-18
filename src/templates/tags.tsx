@@ -7,15 +7,16 @@ import PostSummary from '../components/post-summary';
 const TagsTemplate: React.FC<PageProps> = ({ pageContext, data }) => {
   const { tag } = pageContext;
   const { nodes: posts, totalCount } = data.allMarkdownRemark;
-  const title = `Blog Posts About ${tag}`;
+  const pageTitle = `Blog Posts About ${tag}`;
+  const { title: siteTitle } = data.site.siteMetadata;
 
   return (
-    <Layout location={location} title={data.site.siteMetadata.title}>
+    <Layout location={location} title={siteTitle}>
       <Seo
-        title={title}
-        description={`Blog posts from the Principled Engineer covering ${tag.toLowerCase()}.`}
+        title={pageTitle}
+        description={`Blog posts from ${siteTitle} covering ${tag.toLowerCase()}.`}
       />
-      <h1>{title}</h1>
+      <h1>{pageTitle}</h1>
       <p>{`${totalCount} post${totalCount > 1 ? 's' : ''}`}</p>
 
       <ul>
