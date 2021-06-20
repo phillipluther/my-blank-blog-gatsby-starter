@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Link, graphql } from 'gatsby';
-
+import { GatsbyImage, getImage } from 'gatsby-plugin-image';
 import Bio from '../components/bio';
 import Layout from '../components/layout';
 import Seo from '../components/seo';
@@ -9,17 +9,26 @@ const BlogPostTemplate = ({ data, location }) => {
   const post = data.markdownRemark;
   const siteTitle = data.site.siteMetadata?.title || `Title`;
   const { previous, next } = data;
+  const {
+    title: postTitle,
+    description,
+    date,
+    coverImage,
+  } = post.frontmatter;
 
   return (
     <Layout location={location} title={siteTitle}>
       <Seo
-        title={post.frontmatter.title}
-        description={post.frontmatter.description || post.excerpt}
+        title={postTitle}
+        description={description || post.excerpt}
       />
       <article className="blog-post" itemScope itemType="http://schema.org/Article">
         <header>
-          <h1 itemProp="headline">{post.frontmatter.title}</h1>
-          <p>{post.frontmatter.date}</p>
+          <h1 itemProp="headline">{postTitle}</h1>
+          <p>{date}</p>
+          {coverImage && (
+            <GatsbyImage image={getImage(coverImage)} alt={postTitle} role="presentation" />
+          )}
         </header>
         <section dangerouslySetInnerHTML={{ __html: post.html }} itemProp="articleBody" />
         <hr />
@@ -30,10 +39,10 @@ const BlogPostTemplate = ({ data, location }) => {
       <nav className="blog-post-nav">
         <ul
           style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            listStyle: 'none',
             padding: 0,
           }}
         >
@@ -74,6 +83,11 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         description
+        coverImage {
+          childImageSharp {
+            gatsbyImageData(layout: CONSTRAINED)
+          }
+        }
       }
     }
     previous: markdownRemark(id: { eq: $previousPostId }) {
