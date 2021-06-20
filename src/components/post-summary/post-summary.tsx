@@ -25,11 +25,13 @@ const PostSummary: React.FC<PostSummaryProps> = ({
   return (
     <article className="post-summary">
       <header>
-        <h3>{title}</h3>
+        <h3><Link to={slug} tabIndex={-1}>{title}</Link></h3>
         <p>{date}</p>
 
         {coverImage && (
-          <GatsbyImage image={getImage(coverImage)} alt={title} role="presentation" />
+          <Link to={slug} tabIndex={-1}>
+            <GatsbyImage image={getImage(coverImage)} alt={title} role="presentation" />
+          </Link>
         )}
       </header>
 
