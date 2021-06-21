@@ -17,21 +17,17 @@ const Bio: React.FC = () => {
           author {
             name
             summary
-          }
-          social {
-            href
-            label
+            email
           }
         }
       }
     }
   `);
 
-  // Set these values by editing "siteMetadata" in gatsby-config.js
   const author = data.site.siteMetadata?.author;
-  const social = data.site.siteMetadata?.social;
   const authorName = author?.name || 'Author Bio';
   const authorSummary = author?.summary;
+  const authorEmail = author?.email;
 
   return (
     <aside className="bio">
@@ -46,16 +42,7 @@ const Bio: React.FC = () => {
         alt={authorName}
       />
       {authorSummary && <p>{authorSummary || null}</p>}
-
-      {social && (
-        <ul className="social">
-          {/* {social.map(({ href, label }) =>(
-            <li className="social-item" key={href}>
-              <a href={href} className="social-link">{label}</a>
-            </li>
-          ))} */}
-        </ul>
-      )}
+      {authorEmail && <p><a href={`mailto:${authorEmail}`}>Email me</a></p>}
     </aside>
   );
 };

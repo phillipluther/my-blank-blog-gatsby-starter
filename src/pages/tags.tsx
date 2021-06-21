@@ -2,19 +2,19 @@ import * as React from 'react';
 import { Link, graphql, PageProps } from 'gatsby';
 import { Helmet } from 'react-helmet';
 import dashify from 'dashify';
+import Layout from '../components/layout';
+
+const pageTitle = 'Browse Post Categories';
 
 const TagsPage: React.FC<PageProps> = ({
   data: {
     allMarkdownRemark: { group },
-    site: {
-      siteMetadata: { title },
-    },
   },
-}) => (
-  <div>
-    <Helmet title={`Browse Post Categories`} />
+}, location) => (
+  <Layout title={pageTitle} location={location}>
+    <Helmet title={pageTitle} />
     <div>
-      <h1>Browse Post Categories</h1>
+      <h1>{pageTitle}</h1>
       <ul>
         {group.map((tag) => (
           <li key={tag.fieldValue}>
@@ -25,18 +25,13 @@ const TagsPage: React.FC<PageProps> = ({
         ))}
       </ul>
     </div>
-  </div>
+  </Layout>
 );
 
 export default TagsPage;
 
 export const tagsPageQuery = graphql`
   query {
-    site {
-      siteMetadata {
-        title
-      }
-    }
     allMarkdownRemark(limit: 2000) {
       group(field: frontmatter___tags) {
         fieldValue

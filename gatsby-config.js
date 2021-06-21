@@ -6,8 +6,9 @@ module.exports = {
   siteMetadata: {
     title,
     author: {
-      name: packageData.author,
+      name: 'Phillip Luther',
       summary: '... the author summary ...',
+      email: 'author@author.author',
     },
     description: packageData.description,
     siteUrl: packageData.homepage,

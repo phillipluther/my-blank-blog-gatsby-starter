@@ -2,6 +2,9 @@ import * as React from 'react';
 import { Link } from 'gatsby';
 import { RouteComponentProps } from '@reach/router';
 import { SkipNavLink, SkipNavContent } from '@reach/skip-nav';
+import PrimaryNav from '../primary-nav';
+import SocialLinks from '../social-links';
+
 import * as styles from './header.module.css';
 import '@reach/skip-nav/styles.css';
 
@@ -24,6 +27,9 @@ const Header: React.FC<HeaderProps> = ({ title, location }) => {
             {title}
           </Link>
         </TitleTag>
+
+        <PrimaryNav />
+        <SocialLinks />
       </header>
       <SkipNavContent />
     </>
